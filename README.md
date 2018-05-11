@@ -133,6 +133,7 @@ Note that the entire mapping is not supported, however an example response looks
       }
     }
   ]
-}```
+}
+```
 
 This can be extended by modifying `metawrap.go`.

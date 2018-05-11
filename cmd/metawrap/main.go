@@ -12,7 +12,7 @@ import (
 var mm metawrap.MetaMap
 
 type args struct {
-	Path string `arg:"help:path to MetaMap binary"`
+	Path string `arg:"required,help:path to MetaMap binary"`
 }
 
 func (args) Version() string {
