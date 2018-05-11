@@ -6,7 +6,7 @@ via a REST api.
 To install the server:
 
 ```
-go install -u github.com/hscells/metawrap
+go install github.com/hscells/metawrap/cmd/metawrap
 ```
 
 To start the server, issue:
