@@ -56,7 +56,7 @@ func NewMetaMapClient(path string) MetaMap {
 
 // Map uses MetaMap to map text to candidates.
 func (m MetaMap) Map(text string) (MetaMapping, error) {
-	cmd := exec.Command("bash", "-c", fmt.Sprintf("echo '%v' | %v --JSONf 2 --silent", text, m.path))
+	cmd := exec.Command("bash", "-c", fmt.Sprintf("echo '%v' | %v --JSONn --silent", text, m.path))
 
 	r, err := cmd.StdoutPipe()
 	if err != nil {

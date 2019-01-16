@@ -1,12 +1,14 @@
 package main
 
 import (
-	"log"
-	"github.com/gin-gonic/gin"
-	"net/http"
-	"github.com/hscells/metawrap"
-	"github.com/alexflint/go-arg"
 	"bytes"
+	"fmt"
+	"github.com/alexflint/go-arg"
+	"github.com/gin-gonic/gin"
+	"github.com/hscells/metawrap"
+	"log"
+	"net/http"
+	"os"
 )
 
 var mm metawrap.MetaMap
@@ -68,9 +70,13 @@ func main() {
 	router := gin.Default()
 
 	// Main query interface.
-	router.GET("/mm/map", handleMap)
-	router.GET("/mm/candidates", handleCandidates)
+	router.POST("/mm/map", handleMap)
+	router.POST("/mm/candidates", handleCandidates)
 
 	log.Println("let's go!")
-	log.Fatal(http.ListenAndServe(":4646", router))
+	port := os.Getenv("METAWRAP_PORT")
+	if len(port) == 0 {
+		port = "4646"
+	}
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", port), router))
 }
