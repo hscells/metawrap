@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
-	"path"
 )
 
 type HTTPClient struct {
@@ -13,7 +12,7 @@ type HTTPClient struct {
 }
 
 func (c HTTPClient) Candidates(text string) (candidates []MappingCandidate, err error) {
-	req, err := http.NewRequest("POST", path.Join(c.URL, "/mm/candidates"), bytes.NewBufferString(text))
+	req, err := http.NewRequest("POST", c.URL+"/mm/candidates", bytes.NewBufferString(text))
 	if err != nil {
 		return
 	}
