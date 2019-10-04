@@ -25,11 +25,13 @@ func (c HTTPClient) Candidates(text string) (candidates []MappingCandidate, err 
 	if resp.ContentLength == 0 {
 		return
 	}
+	if resp.StatusCode != http.StatusOK {
+		return []MappingCandidate{}, nil
+	}
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(b))
 	err = json.NewDecoder(bytes.NewBuffer(b)).Decode(&candidates)
 	if err != nil {
 		return
