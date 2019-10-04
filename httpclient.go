@@ -3,6 +3,8 @@ package metawrap
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -23,6 +25,11 @@ func (c HTTPClient) Candidates(text string) (candidates []MappingCandidate, err 
 	if resp.ContentLength == 0 {
 		return
 	}
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(b)
 	err = json.NewDecoder(resp.Body).Decode(&candidates)
 	if err != nil {
 		return
