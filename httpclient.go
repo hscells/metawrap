@@ -29,8 +29,8 @@ func (c HTTPClient) Candidates(text string) (candidates []MappingCandidate, err 
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(b)
-	err = json.NewDecoder(resp.Body).Decode(&candidates)
+	fmt.Println(string(b))
+	err = json.NewDecoder(bytes.NewBuffer(b)).Decode(&candidates)
 	if err != nil {
 		return
 	}
