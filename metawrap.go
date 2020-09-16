@@ -1,11 +1,11 @@
 package metawrap
 
 import (
-	"os/exec"
-	"fmt"
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"os/exec"
 )
 
 type MappingCandidate struct {
@@ -13,6 +13,7 @@ type MappingCandidate struct {
 	CandidateCUI       string
 	CandidateMatched   string
 	CandidatePreferred string
+	Negated            string
 	SemTypes           []string
 	Sources            []string
 	MatchedWords       []string
@@ -56,7 +57,7 @@ func NewMetaMapClient(path string) MetaMap {
 
 // Map uses MetaMap to map text to candidates.
 func (m MetaMap) Map(text string) (MetaMapping, error) {
-	cmd := exec.Command("bash", "-c", fmt.Sprintf("echo '%v' | %v --JSONn --silent", text, m.path))
+	cmd := exec.Command("bash", "-c", fmt.Sprintf("echo '%v' | %v --JSONn --silent --negex", text, m.path))
 
 	r, err := cmd.StdoutPipe()
 	if err != nil {
