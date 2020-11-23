@@ -66,15 +66,12 @@ func (m MetaMap) Map(text string) (MetaMapping, error) {
 
 	cmd.Start()
 
-	s := bufio.NewScanner(bufio.NewReader(r))
+	reader := bufio.NewReader(r)
 	// Skip the first line.
-	s.Scan()
-	var buff bytes.Buffer
-	for s.Scan() {
-		_, err = buff.Write(s.Bytes())
-		if err != nil {
-			return MetaMapping{}, err
-		}
+	_, _ = reader.ReadBytes('\n')
+	buff, err := reader.ReadBytes('\n')
+	if err != nil {
+		panic(err)
 	}
 
 	if err := cmd.Wait(); err != nil {
@@ -82,7 +79,7 @@ func (m MetaMap) Map(text string) (MetaMapping, error) {
 	}
 
 	var d MetaMapping
-	if err := json.NewDecoder(bytes.NewReader(buff.Bytes())).Decode(&d); err != nil {
+	if err := json.NewDecoder(bytes.NewReader(buff)).Decode(&d); err != nil {
 		return MetaMapping{}, err
 	}
 
