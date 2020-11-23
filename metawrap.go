@@ -77,12 +77,12 @@ func (m MetaMap) Map(text string) (MetaMapping, error) {
 		}
 	}
 
-	var d MetaMapping
-	if err := json.NewDecoder(bytes.NewReader(buff.Bytes())).Decode(&d); err != nil {
+	if err := cmd.Wait(); err != nil {
 		return MetaMapping{}, err
 	}
 
-	if err := cmd.Wait(); err != nil {
+	var d MetaMapping
+	if err := json.NewDecoder(bytes.NewReader(buff.Bytes())).Decode(&d); err != nil {
 		return MetaMapping{}, err
 	}
 
